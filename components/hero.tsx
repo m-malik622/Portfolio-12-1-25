@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Github, Linkedin, Mail, FileText } from "lucide-react"
+
 function IconButton({ href, children }: { href: string; children: React.ReactNode }) {
   const isExternal = href.startsWith("http")
 
@@ -67,10 +68,10 @@ export default function Hero() {
         </p>
 
         <motion.div
-        className="flex flex-wrap gap-3"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.4 }}
+          className="flex flex-wrap gap-3"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
         >
           <Button asChild className="shadow-lg shadow-purple-500/30">
             <a href="#projects">View Projects</a>
@@ -98,9 +99,23 @@ export default function Hero() {
             <IconButton href="mailto:dinatiang1108@gmail.com">
               <Mail className="h-4 w-4" />
             </IconButton>
-            <IconButton href="https://drive.google.com/file/d/1-VIap0-5IK2ltH4NcLrkTqGk4kS9OiVu/view?usp=sharing">
-              <FileText className="h-4 w-4" />
-            </IconButton>
+
+            {/* ✅ Resume button with full word */}
+            <Button
+              asChild
+              className="ml-1 h-10 rounded-full border border-amber-300/70 bg-amber-300/15 px-4 text-xs font-semibold uppercase tracking-wide text-amber-100 hover:bg-amber-300/25 hover:text-amber-50 shadow-md shadow-amber-400/40"
+            >
+              <a
+                href="https://drive.google.com/file/d/1-VIap0-5IK2ltH4NcLrkTqGk4kS9OiVu/view?usp=sharing"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="inline-flex items-center gap-1">
+                  <FileText className="h-3 w-3" />
+                  <span>Resume</span>
+                </span>
+              </a>
+            </Button>
           </motion.div>
         </motion.div>
       </motion.div>
@@ -119,7 +134,7 @@ export default function Hero() {
           {/* Photo */}
           <div className="relative h-full w-full overflow-hidden rounded-full border-4 border-background/80 bg-background shadow-2xl shadow-purple-500/40">
             <Image
-              src="/dina_taing.JPG" // your real file
+              src="/dina_taing.JPG"
               alt="Portrait of Dina Taing"
               fill
               className="object-cover"

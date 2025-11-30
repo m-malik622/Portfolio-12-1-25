@@ -120,6 +120,39 @@
       transform: translateY(-8px);
     }
   }
+@keyframes scribbleDraw {
+  0% {
+    stroke-dasharray: 0 400;
+    stroke-dashoffset: 0;
+  }
+  40% {
+    stroke-dasharray: 200 400;
+    stroke-dashoffset: 0;
+  }
+  60% {
+    stroke-dasharray: 200 400;
+    stroke-dashoffset: -50;
+  }
+  100% {
+    stroke-dasharray: 0 400;
+    stroke-dashoffset: -200;
+  }
+}
+
+.scribble-stroke {
+  stroke-dasharray: 0 400;
+  stroke-dashoffset: 0;
+  animation: scribbleDraw 14s ease-in-out infinite alternate;
+}
+
+.scribble-stroke-delayed {
+  stroke-dasharray: 0 400;
+  stroke-dashoffset: 0;
+  animation: scribbleDraw 18s ease-in-out infinite alternate;
+}
+
+  
+  
 
   .animate-float {
     animation: float 8s ease-in-out infinite;
