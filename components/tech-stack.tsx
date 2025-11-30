@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge"
 
 const stackItems = [
   // Languages
-  "Dart (Flutter)",
+  "Dart · Flutter",
   "Go",
   "Python",
   "Java",

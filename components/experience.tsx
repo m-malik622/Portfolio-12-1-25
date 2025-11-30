@@ -3,16 +3,33 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
 const EXPERIENCE_ITEMS = [
   {
-    title: "Software Engineer & Research Roles",
+    
+    title: "AI/LLM Developer Intern - Our Lady of the Lake",
     bullets: [
-      "AI/ML & HPC research at LSU (HPX, CFD, PyTorch).",
-      "Open-source tooling for developer productivity and eye-tracking research.",
-      "Backend + Flutter work for apps used by LSU students and research groups.",
+      "Reduced staff search time by 70% by integrating hospital tools and resources into a unified MCP-driven platform.",
+      "Delivered fast, reliable enterprise access by building and deploying an MCP server integrated with Microsoft Teams.",
+      "Used Microsoft Foundry AI, Azure containers, and Redis caching to provide centralized high-performance knowledge access.",
     ],
-    className:
-      "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+    className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
   },
   {
+    title: "Eyetracker Plugin Developer - Ai4SE LAB",
+    bullets: [
+      "Developed an open-source JetBrains standalone plugin using Java, Python, and Docker to simplify setup and eliminate system-level issues.",
+      "Implemented Tobii-Fusion eye-tracker to detect developer gaze and distinguish between handwritten and AI/Copilot-generated code.",
+      "Reduced configuration failure by 80% through optimization and improved developer experience.",
+    ],
+    className: "border border-white/15 bg-amber-900/30 backdrop-blur-md shadow-lg shadow-amber/30",
+  },
+  {
+    title: "Machine Learning Engineer - WISE Research",
+    bullets: [
+      "Reduced CFD computation time by 20× by optimizing C++ multithreaded execution.",
+      "Integrated AI-based prediction models into the OpenFOAM workflow to accelerate simulation results.",
+    ],
+    className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+  },
+    {
     title: "Board Member & Project Lead — GDG @ LSU",
     bullets: [
       "Hosted and organized hackathons for LSU students.",
@@ -23,7 +40,24 @@ const EXPERIENCE_ITEMS = [
     className:
       "border border-purple-400/40 bg-purple-900/25 backdrop-blur-md shadow-lg shadow-purple-900/40",
   },
-]
+  {
+    title: "Software Engineer - Stellar Group",
+    bullets: [
+      "Increased HPX shared-thread execution performance by 30% by optimizing GCC-linked subsystem bottlenecks.",
+      "Enabled higher scalability for parallel C++ applications.",
+    ],
+    className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+  },
+  {
+    title: "Fullstack Developer - LSU",
+    bullets: [
+      "Developed a mobile app using Dart and Flutter to replace paper forms, improving construction site workflows.",
+      "Worked on backend and Flutter app development for LSU students and research groups.",
+    ],
+    className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+  },
+];
+
 
 export default function Experience() {
   return (
