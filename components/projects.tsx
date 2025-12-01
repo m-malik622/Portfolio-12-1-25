@@ -230,9 +230,6 @@ function CodePreview({ sample }: { sample: CodeSample }) {
     </motion.div>
   )
 }
-
-
-
 /* ------------------------ Projects Data ------------------------ */
 
 const projects: Project[] = [
@@ -487,6 +484,56 @@ const projects: Project[] = [
       },
     ],
   },
+  {
+  id: "strikezone-ml",
+  title: "LSU Softball Strike Zone Prediction Model",
+  year: "2025",
+  summary:
+    "A machine learning project that models umpire strike-zone decisions for LSU Softball using real pitch-tracking data. The system predicts the probability of a called strike based on pitch location, batter/pitcher handedness, and swing behavior. Built using neural-network transfer learning, model surgery, and custom visualization tools to generate detailed strike-zone heatmaps.",
+  tech: [
+    "PyTorch",
+    "Neural Networks",
+    "Python",
+    "NumPy",
+    "Matplotlib",
+    "ML Engineering"
+  ],
+  details: [
+    "Developed a custom MLP architecture that predicts called-strike probability using vertical location, horizontal location, swing status, and handedness inputs.",
+    "Implemented weight-surgery transfer learning to expand a small initial model into a more complex 5-feature architecture without losing previously-learned MLB behavior.",
+    "Trained and fine-tuned the upgraded model on LSU Softball data to capture umpire-specific strike-zone tendencies.",
+    "Created heatmap generators that visualize strike probabilities under all combinations of batter/pitcher handedness and swing behavior.",
+    "Added support for overlaying official softball rulebook strike-zone boundaries for comparison against real umpire behavior.",
+  ],
+  highlights: [
+    "Neural Network Weight Surgery",
+    "Strike-Zone Heatmaps",
+    "Feature Expansion (x, y, swing, pitcher hand, batter hand)",
+    "LSU Softball Fine-Tuning",
+    "Umpire Behavior Modeling"
+  ],
+  userExperience: [
+    "Analysts can visualize 2D probability maps showing how likely an umpire is to call a strike at any location.",
+    "Heatmaps automatically adapt to context: batter handedness, pitcher handedness, and whether the batter swings.",
+    "The model reveals expansions/shrinkages in the zone compared to the rulebook, assisting scouting and decision-making.",
+    "Coaches and researchers can compare different scenarios (LHP vs RHB, swing vs take) through clear visual outputs.",
+    "Umpire tendencies are modeled probabilistically rather than through fixed rules, capturing real-world decision patterns."
+  ],
+  image: "/projects/strikezone-cover.png",
+  screens: ["/projects/softball/1.png","/projects/softball/2.png","/projects/softball/3.png","/projects/softball/4.png"],
+  repoUrl: "https://github.com/dtaing11/StrikeZone-Model",
+  showCodePreview: true,
+    codeSamples: [
+      {
+        label: "model_surgery.py",
+        url: "https://raw.githubusercontent.com/dtaing11/Math4020-Softball-Trackman-StrikeZone/refs/heads/main/Strickzone_Predictve_Model/utils/model_weight_surgery.py",
+        repoUrl:
+          "https://github.com/dtaing11/Math4020-Softball-Trackman-StrikeZone/blob/main/Strickzone_Predictve_Model/utils/model_weight_surgery.py",
+        challenge:
+  "Expanding a trained 3-input model into a 5-input architecture without losing learned behavior. Required carefully rewriting the first-layer weight matrix, aligning state_dict keys across different model wrappers, and ensuring the upgraded network stayed numerically stable during fine-tuning on the new dataset.",
+    },
+    ],
+},
 ]
 
 /* ------------------------ Component ------------------------ */

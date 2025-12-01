@@ -2,42 +2,30 @@
 import { Badge } from "@/components/ui/badge"
 
 const stackItems = [
-  // Languages
+  // Languages & Core
   "Dart · Flutter",
   "Go",
-  "Python",
-  "Java",
-  "JavaScript / TypeScript",
-  "C / C++",
-  "HTML / CSS",
-
-  // Mobile & Frontend
-  "Flutter",
-  "React",
-  "Next.js",
-
-  // Backend & APIs
-  "FastAPI",
-  "Spring Boot",
-
-  // AI / ML
-  "PyTorch",
+  "Python · FastAPI · PyTorch",
+  "Java · Spring Boot",
+  "JavaScript · TypeScript · React · Next.js",
+  "C · C++",
 
   // Cloud & DevOps
   "AWS · Amplify · DynamoDB · Lambda",
-  "Supabase",
-  "Firebase",
+  "GCP · Cloud Run · Compute VM",
+  "Supabase · Realtime · Storage",
+  "Firebase · Auth",
   "Docker",
-  "GCP Cloud Run",
 
   // Databases
   "PostgreSQL",
-  "DynamoDB",
 
-  // Tools & Testing
-  "JUnit",
+  // Communication & Infra
+  "WebSockets",
   "GitHub Actions",
-  "WebSockets"
+
+  // Testing
+  "Unit Testing"
 ];
 
 
