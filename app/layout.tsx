@@ -14,7 +14,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dina Taing",
-  description: "Dina Taing — software engineer focused on AI/ML, software development, and high-performance computing."
+  description: "Dina Taing — software engineer focused on AI/ML, software development, and high-performance computing.",
+  icons:{
+    icon: "/dina_taing.JPG",
+    shortcut: "/dina_taing.JPG",
+    apple: "/dina_taing.JPG",
+  }
 };
 
 export default function RootLayout({
@@ -32,3 +37,4 @@ export default function RootLayout({
     </html>
   );
 }
+ 

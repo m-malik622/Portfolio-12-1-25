@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Github, Linkedin, Mail, FileText } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 
 function IconButton({ href, children }: { href: string; children: React.ReactNode }) {
   const isExternal = href.startsWith("http")
@@ -99,23 +99,6 @@ export default function Hero() {
             <IconButton href="mailto:dinatiang1108@gmail.com">
               <Mail className="h-4 w-4" />
             </IconButton>
-
-            {/* ✅ Resume button with full word */}
-            <Button
-              asChild
-              className="ml-1 h-10 rounded-full border border-amber-300/70 bg-amber-300/15 px-4 text-xs font-semibold uppercase tracking-wide text-amber-100 hover:bg-amber-300/25 hover:text-amber-50 shadow-md shadow-amber-400/40"
-            >
-              <a
-                href="https://drive.google.com/file/d/1-VIap0-5IK2ltH4NcLrkTqGk4kS9OiVu/view?usp=sharing"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span className="inline-flex items-center gap-1">
-                  <FileText className="h-3 w-3" />
-                  <span>Resume</span>
-                </span>
-              </a>
-            </Button>
           </motion.div>
         </motion.div>
       </motion.div>
@@ -128,10 +111,7 @@ export default function Hero() {
         transition={{ delay: 0.2, duration: 0.6, type: "spring", stiffness: 120, damping: 18 }}
       >
         <div className="relative h-52 w-52 md:h-64 md:w-64 animate-float">
-          {/* Glow ring */}
           <div className="absolute inset-0 rounded-full bg-linear-to-tr from-purple-500/70 via-indigo-400/70 to-amber-400/70 blur-2xl" />
-
-          {/* Photo */}
           <div className="relative h-full w-full overflow-hidden rounded-full border-4 border-background/80 bg-background shadow-2xl shadow-purple-500/40">
             <Image
               src="/image_dina.png"
