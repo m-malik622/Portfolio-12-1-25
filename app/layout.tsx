@@ -13,12 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dina Taing",
-  description: "Dina Taing — software engineer focused on AI/ML, software development, and high-performance computing.",
+  title: "Mujtaba Malik",
+  description: "Mujtaba Malik — software engineer focused on AI/ML, software development, and web development.",
   icons:{
-    icon: "/DT.png",
-    shortcut: "/DT.png",
-    apple: "/DT.png",
+    icon: "/MM.jpg",
+    shortcut: "/MM.jpg",
+    apple: "/MM.jpg",
   }
 };
 

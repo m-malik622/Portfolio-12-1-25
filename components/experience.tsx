@@ -2,8 +2,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
 const EXPERIENCE_ITEMS = [
-  {
-    
+   {
     title: "AI/LLM Developer Intern - Our Lady of the Lake",
     bullets: [
       "Reduced staff search time by 70% by integrating hospital tools and resources into a unified MCP-driven platform.",
@@ -13,49 +12,46 @@ const EXPERIENCE_ITEMS = [
     className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
   },
   {
-    title: "Eyetracker Plugin Developer - Ai4SE LAB",
-    bullets: [
-      "Developed an open-source JetBrains standalone plugin using Java, Python, and Docker to simplify setup and eliminate system-level issues.",
-      "Implemented Tobii-Fusion eye-tracker to detect developer gaze and distinguish between handwritten and AI/Copilot-generated code.",
-      "Reduced configuration failure by 80% through optimization and improved developer experience.",
-    ],
-    className: "border border-white/15 bg-amber-900/30 backdrop-blur-md shadow-lg shadow-amber/30",
-  },
-  {
-    title: "Machine Learning Engineer - WISE Research",
-    bullets: [
-      "Reduced CFD computation time by 20× by optimizing C++ multithreaded execution.",
-      "Integrated AI-based prediction models into the OpenFOAM workflow to accelerate simulation results.",
-    ],
-    className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
-  },
-    {
-    title: "Board Member & Project Lead — GDG @ LSU",
-    bullets: [
-      "Hosted and organized hackathons for LSU students.",
-      "Built and led development of the GDG@LSU.org website.",
-      "Project Lead for GeauxApp, on track to launch for LSU students in Spring 2026.",
-      "Ran workshops in C++, parallel programming, and Flutter.",
-    ],
-    className:
-      "border border-purple-400/40 bg-purple-900/25 backdrop-blur-md shadow-lg shadow-purple-900/40",
-  },
-  {
-    title: "Software Engineer - Stellar Group",
-    bullets: [
-      "Increased HPX shared-thread execution performance by 30% by optimizing GCC-linked subsystem bottlenecks.",
-      "Enabled higher scalability for parallel C++ applications.",
-    ],
-    className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
-  },
-  {
-    title: "Fullstack Developer - LSU",
-    bullets: [
-      "Developed a mobile app using Dart and Flutter to replace paper forms, improving construction site workflows.",
-      "Worked on backend and Flutter app development for LSU students and research groups.",
-    ],
-    className: "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
-  },
+  title: "Data Science & Software Engineering Intern — BASF Geismar, LA",
+  bullets: [
+    "Built 2 Databricks pipelines with PySpark to track 40M+ invoice records, reducing manual queries by 73%.",
+    "Developed a Python-based config manager for 400+ machines across site with full dev/prod environment support.",
+    "Fine-tuned Azure ML models and built a Power Automate workflow to flag 1,000+ invoice–contract discrepancies, reducing manual verification time."
+  ],
+  className:
+    "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+},
+{
+  title: "President — Google Developer Group @ LSU",
+  bullets: [
+    "Designed and developed the official GDSC@LSU website used by 150+ students. gdsclsu.org",
+    "Led 30+ developers, creating client–server architecture and technical roadmaps for Flutter web and mobile projects.",
+    "Organized Geaux Hackathon and GDSC events, managing 11 officers and collaborating with GDG chapter leads and industry partners. https://www.linkedin.com/company/gdsclsu",
+  ],
+  className:
+    "border border-purple-400/40 bg-purple-900/25 backdrop-blur-md shadow-lg shadow-purple-900/40",
+},
+{
+  title: "Supplemental Instructor — LSU Computer Science Department",
+  bullets: [
+    "Conducted 20+ structured Java, data structures, and algorithms reviews for 200+ students.",
+    "Delivered 4 lectures to 70+ students covering algorithm limitations, applications, and live Java implementations.",
+    "Reduced fail rate by 36% through debugging sessions, algorithm walkthroughs, and code optimization practice.",
+  ],
+  className:
+    "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+},
+{
+  title: "Software Engineering Researcher — Professor Index App",
+  bullets: [
+    "Built 30+ Selenium/BeautifulSoup scrapers, collecting 8K+ professor and 14K+ course records.",
+    "Optimized Python ETL pipeline, improving data access speed by 45% for 150+ student users.",
+  ],
+  className:
+    "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+},
+
+  
 ];
 
 
