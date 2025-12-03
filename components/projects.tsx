@@ -232,6 +232,7 @@ function CodePreview({ sample }: { sample: CodeSample }) {
 }
 /* ------------------------ Projects Data ------------------------ */
 
+/*
 const projects: Project[] = [
   {
     id: "municipal",
@@ -535,6 +536,199 @@ const projects: Project[] = [
     ],
 },
 ]
+*/
+const projects: Project[] = [
+  {
+    id: "heritera",
+    title: "Project Heritera",
+    year: "2025",
+    summary:
+      "A full-stack platform where users discover unique Louisiana heritage languages and share custom-made language courses with the public and friends. Built using Django, React, and JWT-based authentication.",
+    tech: ["Python", "Django", "React", "REST API", "Vercel"],
+    details: [
+      "Built full-stack web application with Django backend and React frontend to showcase cultural language content.",
+      "Implemented role-based authentication and secure access using JWT tokens.",
+      "Added automated testing workflows using Django Test Framework and React Storybook for component-level testing.",
+      "Designed course-sharing system where users can create, publish, and share lessons publicly or privately."
+    ],
+    highlights: [
+      "Full-Stack Testing (Django Test + Storybook)",
+      "JWT Authentication System",
+      "Course Sharing & Heritage Content Platform"
+    ],
+    userExperience: [
+      "Users browse public heritage-language courses with clean navigation and fast search.",
+      "Creators can upload lessons, edit content, and publish courses for friends or the community.",
+      "Authentication keeps personal courses private unless explicitly shared.",
+      "Responsive UI delivers consistent experience across desktop and mobile."
+    ],
+    image: "",
+    screens: [],
+    repoUrl: "",
+    showCodePreview: true,
+    codeSamples: []
+  },
+
+  {
+    id: "geaux-app",
+    title: "Geaux App – GDG@LSU Project Lead",
+    year: "2025",
+    summary:
+      "Led 30+ developers in building a cross-platform campus app for LSU students, featuring events, organizations, and personalized campus discovery. Oversaw architecture, technical roadmap, and engineering workflow.",
+    tech: ["Flutter", "Supabase", "Provider", "GCP", "Node.js"],
+    details: [
+      "Designed high-level architecture for a Flutter-based mobile + web ecosystem using Provider for state management.",
+      "Led sprint planning, PR review pipelines, and onboarding for 30+ developers ranging from beginner to advanced.",
+      "Created client–server communication model using Supabase, middleware caching, and GCP VM routing.",
+      "Established guidelines for modular Flutter development and scalable backend design."
+    ],
+    highlights: [
+      "Leadership of 30+ Developers",
+      "Cross-Platform Architecture",
+      "Campus Events, Orgs & Discovery Modules"
+    ],
+    userExperience: [
+      "Students browse events, organizations, and recommendations tailored to campus life.",
+      "Organizations post announcements and media visible instantly in the feed.",
+      "Users enjoy consistent mobile + web experience built with Flutter.",
+      "Middleware optimizes storage and reduces Supabase cost."
+    ],
+    image: "",
+    screens: [],
+    repoUrl: "",
+    showCodePreview: false
+  },
+
+  {
+    id: "gdsc-website",
+    title: "GDSC LSU Website",
+    year: "2024",
+    summary:
+      "A modern club website built using Flutter and Go, serving as the central hub for LSU’s Google Developer Student Club.",
+    tech: ["Flutter", "Go", "Web"],
+    details: [
+      "Designed and built interactive landing pages using Flutter Web.",
+      "Implemented backend utilities in Go to support dynamic updates.",
+      "Created responsive layouts and component-driven UI for rapid iteration."
+    ],
+    highlights: ["Flutter Web", "Go Backend Utilities", "Club Branding Experience"],
+    userExperience: [
+      "Visitors browse upcoming events, projects, and club resources.",
+      "Mobile-first layout ensures smooth experience across all browsers.",
+      "Admins update content through simple backend scripts."
+    ],
+    image: "",
+    screens: [],
+    repoUrl: "",
+    showCodePreview: false
+  },
+
+  {
+    id: "tutor-llm",
+    title: "Tutor LLM – Multi-Agent Tutoring System",
+    year: "2025",
+    summary:
+      "An AI tutoring platform supporting 100+ students across 25+ CS and physics topics. Uses a supervisor-based multi-agent system to deliver structured explanations and personalized help.",
+    tech: ["Python", "LangChain", "React", "AWS", "FastAPI", "Vercel"],
+    details: [
+      "Built supervised multi-agent LLM system using LangChain with 3 specialized tutor models.",
+      "Implemented FastAPI backend hosted on AWS with scalable endpoints.",
+      "Built modern React frontend deployed on Vercel for seamless student access.",
+      "Integrated topic routing, memory, and reasoning tools for consistent explanations."
+    ],
+    highlights: [
+      "Multi-Agent LLM System",
+      "100+ Real Student Users",
+      "AWS Deployment + React Frontend"
+    ],
+    userExperience: [
+      "Students pick a topic and instantly receive structured tutoring responses.",
+      "Supervisor agent routes questions to the correct domain tutor (CS, physics, etc.).",
+      "Progress persists across sessions with account-based storage."
+    ],
+    image: "",
+    screens: [],
+    repoUrl: "",
+    showCodePreview: true,
+    codeSamples: []
+  },
+
+  {
+    id: "professor-index",
+    title: "Professor Index App – Research Project",
+    year: "2024",
+    summary:
+      "A large-scale scraping and ETL pipeline collecting 8,000+ professor profiles and 14,000+ course records using Selenium and BeautifulSoup.",
+    tech: ["Python", "Selenium", "BeautifulSoup", "ETL"],
+    details: [
+      "Developed and maintained 30+ scrapers for professor and course websites.",
+      "Optimized ETL workflows to improve data access speed by 45%.",
+      "Served 150+ student users with a searchable professor/course discovery tool."
+    ],
+    highlights: ["Large-Scale ETL", "30+ Scrapers", "Research Collaboration"],
+    userExperience: [
+      "Students search for professors and compare ratings across departments.",
+      "Data refreshes automatically with nightly scraping jobs.",
+      "ETL optimizations reduce lookup delays and improve UX."
+    ],
+    image: "",
+    screens: [],
+    repoUrl: "",
+    showCodePreview: false
+  },
+
+  {
+    id: "auto-video-editor",
+    title: "Automated Video Editor API",
+    year: "2024",
+    summary:
+      "A Python-based API for automating video editing tasks for a YouTube channel with 2M+ subscribers. Handles trimming, transitions, overlays, and rendering.",
+    tech: ["Python", "MoviePy", "YouTube API"],
+    details: [
+      "Built API to trim, merge, and enhance clips automatically.",
+      "Added automated transitions, text overlays, and final render pipeline.",
+      "Reduced manual video editing workload by over 70%."
+    ],
+    highlights: [
+      "MoviePy Automation",
+      "YouTube API Integration",
+      "70% Editing Time Reduction"
+    ],
+    userExperience: [
+      "Creators upload raw clips and receive fully edited videos automatically.",
+      "API handles rendering and uploads edited videos directly to YouTube draft.",
+      "Configurable presets allow style consistency across content."
+    ],
+    image: "",
+    screens: [],
+    repoUrl: "",
+    showCodePreview: false
+  },
+
+  {
+    id: "social-media-app",
+    title: "Social Media App – Confidential Prototype",
+    year: "2023",
+    summary:
+      "A prototype social media platform built using HTML, CSS, and JavaScript, focused on user profiles, authentication, and responsive UI.",
+    tech: ["HTML", "CSS", "JavaScript"],
+    details: [
+      "Developed early-stage blueprint for a confidential social platform.",
+      "Implemented login authentication and basic profile system.",
+      "Designed responsive front-end layout optimized for mobile."
+    ],
+    highlights: ["Auth Prototype", "Responsive UI", "Frontend Engineering"],
+    userExperience: [
+      "Users create accounts, log in, and view profile data.",
+      "UI adapts smoothly across devices.",
+      "Demo served as foundation for later iterations."
+    ],
+    image: "",
+    screens: [],
+    repoUrl: "",
+    showCodePreview: false
+  }
+];
 
 /* ------------------------ Component ------------------------ */
 
