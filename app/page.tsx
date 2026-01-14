@@ -3,6 +3,7 @@
 import AnimatedBackground from "@/components/animated-background"
 import Experience from "@/components/experience"
 import Hero from "@/components/hero"
+import Introduction from "@/components/introduction"
 import Projects from "@/components/projects"
 import SiteFooter from "@/components/site-footer"
 import TechStack from "@/components/tech-stack"
@@ -30,6 +31,8 @@ export default function Home() {
       <div className="relative mx-auto flex max-w-5xl flex-col gap-12 px-4 py-10 md:py-16">
         {/* HERO */}
         <Hero />
+        {/* Introduction */}
+        <Introduction />
         {/* Tech stack */}
         <TechStack/>
         {/* Experience */}
