@@ -1,141 +1,229 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "./ui/button";
+import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation"; // Next.js router
 
-function IconButton({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  const isExternal = href.startsWith("http");
+const SLIDE_INTERVAL = 5000;
+
+const slides = [
+  {
+    background: "/hero/heritera.png",
+    title: "Check Out My New Website Vivan",
+    text: "Developed by Me with the assistance of William(kle47@lsu.edu) to help preserve Louisiana Creole. Come learn new content or make your own quizzes",
+    cta: "Check It Out",
+    link: "https://heritera.org",
+  },
+  {
+    background: "/hero/gdglsu.jpeg",
+    title: "Join or Sponsor the Google Developer Group @ LSU",
+    text: "We help grow, connect, and give back to aspiring and experienced developers in Baton Rouge - Malik, President of GDSC@LSU",
+    cta: "Learn More",
+    link: "https://gdsclsu.org/",
+  },
+  {
+    background: "/hero/construction.jpg",
+    title: "Use AI to help prepare for exams",
+    text: "Course Context AI is a recent MCP server I made that uses verified student submitted documents across different courses to help future students prepare for exams, digest materials, or analyze what professors like to see. It can be used with a plethora of other MCP servers on clients like Cursor, Claude, or VSC",
+    cta: "Coming out Mar 13th 2026",
+    link: "",
+  },
+  {
+    background: "/hero/1762997369059.jpeg",
+    title: "Follow My Hackathon Journey",
+    text: "As a Participant, Winner, Mentor, and Organizer where I share valuable insights on what I learned as developer, teammate, and host.",
+    cta: "Go To Section",
+    link: "#hackathons",
+  },
+];
+
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+  }),
+  center: { x: 0 },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-100%" : "100%",
+  }),
+};
+
+export default function Hero() {
+  const [[index, direction], setState] = useState([0, 1]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const router = useRouter();
+
+  const paginate = (newDirection: number) => {
+    setState(([prev]) => [
+      (prev + newDirection + slides.length) % slides.length,
+      newDirection,
+    ]);
+  };
+
+  // Autoslide
+  useEffect(() => {
+    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL) as unknown as NodeJS.Timeout;
+    return () => clearInterval(intervalRef.current as NodeJS.Timeout);
+  }, []);
+
+  const resetTimer = () => {
+    clearInterval(intervalRef.current as NodeJS.Timeout);
+    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL) as unknown as NodeJS.Timeout;
+  };
 
   return (
-    <Button
-      asChild
-      variant="ghost"
-      size="icon"
-      className="
-        h-10 w-10 rounded-full 
-        bg-white/10 
-        hover:bg-white/20 
-        text-white 
-        shadow-md shadow-white/10
-        transition
-      "
-    >
-      <a
-        href={href}
-        target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noreferrer" : undefined}
-      >
-        <span className="text-white">{children}</span>
-      </a>
-    </Button>
+    <section className="relative flex h-screen items-center justify-center px-4">
+      <div className="relative h-[90vh] w-full max-w-6xl overflow-hidden rounded-3xl shadow-xl">
+        {/* Glow behind carousel */}
+        <div
+          className="absolute inset-0 z-0 rounded-3xl
+             bg-gradient-to-tr from-purple-500/50 via-indigo-400/40 to-amber-400/40
+             filter blur-3xl
+             animate-pulseGlow"
+        />
+
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={index}
+            className="absolute inset-0 cursor-grab active:cursor-grabbing z-10"
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.7, ease: "easeInOut" }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.15}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -120) {
+                paginate(1);
+                resetTimer();
+              }
+              if (info.offset.x > 120) {
+                paginate(-1);
+                resetTimer();
+              }
+            }}
+          >
+            <SlideContent slide={slides[index]} router={router} />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Desktop arrows */}
+        <button
+          onClick={() => {
+            paginate(-1);
+            resetTimer();
+          }}
+          className="absolute left-6 top-[55%] z-20 hidden -translate-y-1/2 text-white/80 hover:text-white sm:block transition"
+        >
+          <ChevronLeft size={32} />
+        </button>
+
+        <button
+          onClick={() => {
+            paginate(1);
+            resetTimer();
+          }}
+          className="absolute right-6 top-[55%] z-20 hidden -translate-y-1/2 text-white/80 hover:text-white sm:block transition"
+        >
+          <ChevronRight size={32} />
+        </button>
+
+        {/* Mobile navigation (arrows + dots) */}
+        <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-4 sm:hidden">
+          <button
+            onClick={() => {
+              paginate(-1);
+              resetTimer();
+            }}
+            className="p-1 text-white/70 hover:text-white transition"
+          >
+            <ChevronLeft size={22} />
+          </button>
+
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setState([i, i > index ? 1 : -1]);
+                resetTimer();
+              }}
+              className={`h-2.5 w-2.5 rounded-full transition ${
+                i === index ? "bg-white" : "bg-white/40"
+              }`}
+            />
+          ))}
+
+          <button
+            onClick={() => {
+              paginate(1);
+              resetTimer();
+            }}
+            className="p-1 text-white/70 hover:text-white transition"
+          >
+            <ChevronRight size={22} />
+          </button>
+        </div>
+      </div>
+    </section>
   );
 }
 
-export default function Hero() {
+/* ------------------------------- */
+/* Slide Content */
+/* ------------------------------- */
+function SlideContent({ slide, router }: { slide: (typeof slides)[number]; router: ReturnType<typeof useRouter> }) {
+  const handleClick = () => {
+    if (!slide.link) return; // do nothing if link is empty
+    if (slide.link.startsWith("http")) {
+      window.open(slide.link, "_blank"); // external
+    } else {
+      router.push(slide.link); // internal
+    }
+  };
+
   return (
-    <motion.section
-      className="flex flex-col-reverse gap-8 md:flex-row md:items-center md:justify-between"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      {/* LEFT – text */}
-      <motion.div
-        className="space-y-4 max-w-xl md:order-1 order-2"
-        initial={{ opacity: 0, x: -24 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.15, duration: 0.5 }}
+    <>
+      {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${slide.background})` }}
+      />
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60" />
+
+      {/* Content */}
+      <div
+        className="relative z-10 flex h-full flex-col px-6 py-6 sm:px-12
+                overflow-y-auto sm:overflow-y-visible"
       >
-        <Badge className="border border-purple-400/50 bg-purple-500/20 text-xs uppercase tracking-wide text-purple-100 backdrop-blur">
-            Software and LLM Engineer · Web Dev
-        </Badge>
-
-        <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
-          Hi, I&apos;m{" "}
-          <span className="bg-linear-to-r from-purple-300 via-amber-200 to-purple-200 bg-clip-text text-transparent">
-            Mujtaba Malik
-          </span>
-        </h1>
-
-        <p className="max-w-xl text-gray-300/95 drop-shadow">
-          I’m a junior from New Orleans majoring in
-          Software Engineering with a minor in Math. My interests include
-          machine learning and full-stack web development. I’ve worked as a data
-          science intern at BASF, served as a supplemental instructor, and I’m
-          currently the president of the Google Developer Student Club at LSU
-        </p>
-
-        <motion.div
-          className="flex flex-wrap gap-3"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-        >
-          <Button asChild className="shadow-lg shadow-purple-500/30">
-            <a href="#projects">View Projects</a>
-          </Button>
-
-          <Button
-            asChild
-            className="bg-amber-200 text-slate-950 hover:bg-amber-300 shadow-lg shadow-amber-400/40 border-none"
-          >
-            <a href="#experience">Experience</a>
-          </Button>
-
-          <motion.div
-            className="flex items-center gap-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.45 }}
-          >
-            <IconButton href="https://www.github.com/m-malik622">
-              <Github className="h-4 w-4" />
-            </IconButton>
-            <IconButton href="https://www.linkedin.com/in/mujtaba-malik-7b8442299/">
-              <Linkedin className="h-4 w-4" />
-            </IconButton>
-            <IconButton href="mailto:m.malik62205@gmail.com">
-              <Mail className="h-4 w-4" />
-            </IconButton>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-
-      {/* RIGHT – floating circular portrait */}
-      <motion.div
-        className="flex justify-center md:justify-end md:order-2 order-1"
-        initial={{ opacity: 0, x: 24, scale: 0.9 }}
-        animate={{ opacity: 1, x: 0, scale: 1 }}
-        transition={{
-          delay: 0.2,
-          duration: 0.6,
-          type: "spring",
-          stiffness: 120,
-          damping: 18,
-        }}
-      >
-        <div className="relative h-52 w-52 md:h-64 md:w-64 animate-float">
-          <div className="absolute inset-0 rounded-full bg-linear-to-tr from-purple-500/70 via-indigo-400/70 to-amber-400/70 blur-2xl" />
-          <div className="relative h-full w-full overflow-hidden rounded-full border-4 border-background/80 bg-background shadow-2xl shadow-purple-500/40">
-            <Image
-              src="/image_malik.jpg"
-              alt="Portrait of Mujtaba Malik"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
+        {/* Text */}
+        <div className="mt-20 max-w-3xl">
+          <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+            {slide.title}
+          </h1>
+          <p className="mt-4 text-lg text-white/80 sm:text-xl">{slide.text}</p>
         </div>
-      </motion.div>
-    </motion.section>
+
+        {/* Spacer */}
+        <div className="flex-grow" />
+
+        {/* CTA */}
+        <div className="flex justify-center pb-4 sm:justify-start">
+          <Button
+            size="lg"
+            variant={"secondary"}
+            className="rounded-full px-8 py-6"
+            onClick={handleClick}
+          >
+            {slide.cta}
+          </Button>
+        </div>
+      </div>
+    </>
   );
 }

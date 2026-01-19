@@ -1,44 +1,75 @@
 // components/tech-stack.tsx
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Technologies } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
-const stackItems = [
-  // Languages & Frameworks
-  "Dart · Flutter",
-  "Go",
-  "Python · FastAPI · PyTorch",
-  "Java · Spring Boot",
-  "JavaScript · TypeScript · React · Next.js",
-  "C · C++",
+type Tech = { name: string; category: string };
 
-  // Cloud & DevOps
-  "AWS · Amplify · DynamoDB · Lambda",
-  "Docker",
+interface TechStackProps {
+  selectedTechs: Set<string>;
+  onTechToggle: (techName: string) => void;
+  onClear: () => void;
+}
 
-  // Databases
-  "PostgreSQL",
-  "Supabase · Realtime · Storage",
-  "Firebase",
+export default function TechStack({
+  selectedTechs,
+  onTechToggle,
+  onClear,
+}: TechStackProps) {
+  const groupedByCategory = Object.values(Technologies).reduce(
+    (acc, tech) => {
+      const { category } = tech;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(tech);
+      return acc;
+    },
+    {} as Record<string, Tech[]>,
+  );
 
-  // Communication & Infrastructure
-  "GitHub Actions",
-
-  // Testing
-  "Unit Testing",
-  "Property Testing · Jqwik"
-];
-
-export default function TechStack() {
   return (
-    <section className="space-y-4">
-      <h2 id="tech-stack-heading" className="text-2xl font-semibold text-white">
-        {" "}
-        Tech Stack{" "}
-      </h2>
-      <div className="flex flex-wrap gap-2">
-        {stackItems.map((item) => (
-          <Badge key={item} variant="secondary">
-            {item}
-          </Badge>
+    <section className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2
+          id="tech-stack-heading"
+          className="text-2xl font-semibold text-white"
+        >
+          Filter Experiences and Projects
+        </h2>
+        {selectedTechs.size > 0 && (
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={onClear}
+            className="bg-red-800/80 hover:bg-red-800/60 text-white"
+          >
+            Clear Filters
+          </Button>
+        )}
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4">
+        {Object.entries(groupedByCategory).map(([category, techs]) => (
+          <div key={category} className="space-y-2">
+            <h3 className="text-sm font-medium text-slate-300">{category}</h3>
+            <div className="flex flex-wrap gap-2">
+              {techs.map((tech) => (
+                <Badge
+                  key={tech.name}
+                  variant="secondary"
+                  onClick={() => onTechToggle(tech.name)}
+                  className={cn(
+                    "transition-all hover:bg-slate-700",
+                    selectedTechs.has(tech.name) &&
+                      "bg-purple-500/40 text-purple-100 border border-purple-400/60 shadow-md shadow-purple-900/50 hover:bg-purple-500/30",
+                  )}
+                >
+                  {tech.name}
+                </Badge>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </section>
