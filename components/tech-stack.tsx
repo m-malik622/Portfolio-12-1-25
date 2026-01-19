@@ -58,7 +58,6 @@ export default function TechStack({
                 <Badge
                   key={tech.name}
                   variant="secondary"
-                  as="button"
                   onClick={() => onTechToggle(tech.name)}
                   className={cn(
                     "transition-all hover:bg-slate-700",

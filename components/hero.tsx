@@ -40,21 +40,21 @@ const slides = [
 ];
 
 const slideVariants = {
-  enter: (direction) => ({
+  enter: (direction: number) => ({
     x: direction > 0 ? "100%" : "-100%",
   }),
   center: { x: 0 },
-  exit: (direction) => ({
+  exit: (direction: number) => ({
     x: direction > 0 ? "-100%" : "100%",
   }),
 };
 
 export default function Hero() {
   const [[index, direction], setState] = useState([0, 1]);
-  const intervalRef = useRef(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const router = useRouter();
 
-  const paginate = (newDirection) => {
+  const paginate = (newDirection: number) => {
     setState(([prev]) => [
       (prev + newDirection + slides.length) % slides.length,
       newDirection,
@@ -63,13 +63,13 @@ export default function Hero() {
 
   // Autoslide
   useEffect(() => {
-    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL);
-    return () => clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL) as unknown as NodeJS.Timeout;
+    return () => clearInterval(intervalRef.current as NodeJS.Timeout);
   }, []);
 
   const resetTimer = () => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL);
+    clearInterval(intervalRef.current as NodeJS.Timeout);
+    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL) as unknown as NodeJS.Timeout;
   };
 
   return (
@@ -175,7 +175,7 @@ export default function Hero() {
 /* ------------------------------- */
 /* Slide Content */
 /* ------------------------------- */
-function SlideContent({ slide, router }) {
+function SlideContent({ slide, router }: { slide: (typeof slides)[number]; router: ReturnType<typeof useRouter> }) {
   const handleClick = () => {
     if (!slide.link) return; // do nothing if link is empty
     if (slide.link.startsWith("http")) {
