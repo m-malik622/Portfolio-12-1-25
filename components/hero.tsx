@@ -35,7 +35,7 @@ const slides = [
     title: "Follow My Hackathon Journey",
     text: "As a Participant, Winner, Mentor, and Organizer where I share valuable insights on what I learned as developer, teammate, and host.",
     cta: "Go To Section",
-    link: "",
+    link: "#hackathons",
   },
 ];
 

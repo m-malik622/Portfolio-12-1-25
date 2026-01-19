@@ -7,6 +7,7 @@ import Hero from "@/components/hero";
 import Introduction from "@/components/introduction";
 import Projects from "@/components/projects";
 import SiteFooter from "@/components/site-footer";
+import HackathonTimeline from "@/components/hackathon-timeline";
 import TechStack from "@/components/tech-stack";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // This import is not used, can be removed
@@ -62,6 +63,8 @@ export default function Home() {
         <Experience selectedTechs={selectedTechs} />
         {/* Projects */}
         <Projects selectedTechs={selectedTechs} />
+        {/* Hackahtons */}
+        <HackathonTimeline/>
         {/* Footer */}
         <SiteFooter />
       </div>

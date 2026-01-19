@@ -56,7 +56,7 @@ export default function Introduction() {
         transition={{ delay: 0.15, duration: 0.5 }}
       >
         <Badge className="border border-purple-400/50 bg-purple-500/20 text-xs uppercase tracking-wide text-purple-100 backdrop-blur">
-            Software and LLM Engineer · Web Dev
+            Software and AI Engineer · Web Dev
         </Badge>
 
         <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
