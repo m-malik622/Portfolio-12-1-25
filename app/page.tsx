@@ -1,16 +1,35 @@
-"use client"
+"use client";
 
-import AnimatedBackground from "@/components/animated-background"
-import Experience from "@/components/experience"
-import Hero from "@/components/hero"
-import Introduction from "@/components/introduction"
-import Projects from "@/components/projects"
-import SiteFooter from "@/components/site-footer"
-import TechStack from "@/components/tech-stack"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import AnimatedBackground from "@/components/animated-background";
+import { useState } from "react";
+import Experience from "@/components/experience";
+import Hero from "@/components/hero";
+import Introduction from "@/components/introduction";
+import Projects from "@/components/projects";
+import SiteFooter from "@/components/site-footer";
+import TechStack from "@/components/tech-stack";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // This import is not used, can be removed
 
 export default function Home() {
+  const [selectedTechs, setSelectedTechs] = useState<Set<string>>(new Set());
+
+  const handleTechToggle = (techName: string) => {
+    setSelectedTechs((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(techName)) {
+        newSet.delete(techName);
+      } else {
+        newSet.add(techName);
+      }
+      return newSet;
+    });
+  };
+
+  const handleClearFilters = () => {
+    setSelectedTechs(new Set());
+  };
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-transparent text-foreground">
       {/* Animated LSU glow background */}
@@ -34,14 +53,18 @@ export default function Home() {
         {/* Introduction */}
         <Introduction />
         {/* Tech stack */}
-        <TechStack/>
+        <TechStack
+          selectedTechs={selectedTechs}
+          onTechToggle={handleTechToggle}
+          onClear={handleClearFilters}
+        />
         {/* Experience */}
-        <Experience/>
+        <Experience selectedTechs={selectedTechs} />
         {/* Projects */}
-        <Projects />
+        <Projects selectedTechs={selectedTechs} />
         {/* Footer */}
-        <SiteFooter/>
+        <SiteFooter />
       </div>
     </main>
-  )
+  );
 }

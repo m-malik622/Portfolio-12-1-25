@@ -1,52 +1,58 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Technologies, cn } from "@/lib/utils";
+
 
 type CodeSample = {
-  label: string           // e.g. "main.dart"
-  url: string             // raw GitHub URL
-  repoUrl?: string
-  challenge?: string
+  label: string; // e.g. "main.dart"
+  url: string; // raw GitHub URL
+  repoUrl?: string;
+  challenge?: string;
+};
+
+interface ProjectsProps {
+  selectedTechs: Set<string>;
 }
 
 type Project = {
-  id: string
-  title: string
-  year: string
-  summary: string
-  tech: string[]
-  details: string[]
-  highlights?: string[]
-  userExperience?: string[]
-  image?: string
-  screens?: string[]
-  codeSamples?: CodeSample[]
-  repoUrl?: string
-  showCodePreview?: boolean
-}
+  id: string;
+  title: string;
+  year: string;
+  summary: string;
+  tech: { name: string; category: string }[];
+  details: string[];
+  highlights?: string[];
+  userExperience?: string[];
+  image?: string;
+  screens?: string[];
+  codeSamples?: CodeSample[];
+  repoUrl?: string;
+  showCodePreview?: boolean;
+};
 
 /* ------------------------- Helpers ------------------------- */
 
 function guessLanguage(label: string): string {
-  const lower = label.toLowerCase()
+  const lower = label.toLowerCase();
 
-  if (lower.endsWith(".dart")) return "dart"
-  if (lower.endsWith(".ts") || lower.endsWith(".tsx")) return "typescript"
-  if (lower.endsWith(".js") || lower.endsWith(".jsx")) return "javascript"
-  if (lower.endsWith(".py")) return "python"
-  if (lower.endsWith(".go")) return "go"
+  if (lower.endsWith(".dart")) return "dart";
+  if (lower.endsWith(".ts") || lower.endsWith(".tsx")) return "typescript";
+  if (lower.endsWith(".js") || lower.endsWith(".jsx")) return "javascript";
+  if (lower.endsWith(".py")) return "python";
+  if (lower.endsWith(".go")) return "go";
   if (lower.endsWith(".cpp") || lower.endsWith(".cc") || lower.endsWith(".hpp"))
-    return "cpp"
-  if (lower.endsWith(".java")) return "java"
+    return "cpp";
+  if (lower.endsWith(".java")) return "java";
 
-  return "text"
+  return "text";
 }
 
 function ExpandableList({
@@ -54,14 +60,14 @@ function ExpandableList({
   items,
   initialCount = 3,
 }: {
-  title: string
-  items: string[]
-  initialCount?: number
+  title: string;
+  items: string[];
+  initialCount?: number;
 }) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
 
-  const visibleItems = expanded ? items : items.slice(0, initialCount)
-  const isTruncated = items.length > initialCount
+  const visibleItems = expanded ? items : items.slice(0, initialCount);
+  const isTruncated = items.length > initialCount;
 
   return (
     <div className="space-y-1">
@@ -84,55 +90,55 @@ function ExpandableList({
         </button>
       )}
     </div>
-  )
+  );
 }
 
 /* ------------------------ CodePreview ------------------------ */
 function CodePreview({ sample }: { sample: CodeSample }) {
-  const [code, setCode] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [expanded, setExpanded] = useState(false)
+  const [code, setCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    let cancelled = false
+    let cancelled = false;
 
     async function load() {
       try {
-        setLoading(true)
-        const res = await fetch(sample.url)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const text = await res.text()
+        setLoading(true);
+        const res = await fetch(sample.url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
         if (!cancelled) {
-          setCode(text)
-          setError(null)
-          setExpanded(false) // reset when switching samples
+          setCode(text);
+          setError(null);
+          setExpanded(false); // reset when switching samples
         }
       } catch (err) {
-        console.error(err)
+        console.error(err);
         if (!cancelled) {
-          setError("Failed to load code snippet.")
+          setError("Failed to load code snippet.");
         }
       } finally {
-        if (!cancelled) setLoading(false)
+        if (!cancelled) setLoading(false);
       }
     }
 
-    load()
+    load();
     return () => {
-      cancelled = true
-    }
-  }, [sample.url])
+      cancelled = true;
+    };
+  }, [sample.url]);
 
-  const language = guessLanguage(sample.label)
+  const language = guessLanguage(sample.label);
 
   // --- truncation logic ---
-  const totalLines = code ? code.split("\n").length : 0
-  const hasMore = totalLines > 80
+  const totalLines = code ? code.split("\n").length : 0;
+  const hasMore = totalLines > 80;
 
-  let displayCode = code ?? ""
+  let displayCode = code ?? "";
   if (code && hasMore && !expanded) {
-    displayCode = code.split("\n").slice(0, 80).join("\n")
+    displayCode = code.split("\n").slice(0, 80).join("\n");
   }
 
   return (
@@ -150,7 +156,8 @@ function CodePreview({ sample }: { sample: CodeSample }) {
           </h3>
           {sample.challenge && (
             <p className="text-[11px] text-slate-300">
-              <span className="font-semibold">Challenge:</span> {sample.challenge}
+              <span className="font-semibold">Challenge:</span>{" "}
+              {sample.challenge}
             </p>
           )}
         </div>
@@ -171,13 +178,11 @@ function CodePreview({ sample }: { sample: CodeSample }) {
 
       {/* Code container — height animates smoothly */}
       <div
-        className={
-          [
-            "relative overflow-y-auto overflow-x-hidden rounded-md bg-black/90",
-            "transition-[max-height] duration-300 ease-out",
-            expanded ? "max-h-[80vh]" : "max-h-[40vh] md:max-h-[60vh]",
-          ].join(" ")
-        }
+        className={[
+          "relative overflow-y-auto overflow-x-hidden rounded-md bg-black/90",
+          "transition-[max-height] duration-300 ease-out",
+          expanded ? "max-h-[80vh]" : "max-h-[40vh] md:max-h-[60vh]",
+        ].join(" ")}
       >
         {loading && <p className="px-2 py-1 text-xs">Loading code...</p>}
         {error && <p className="px-2 py-1 text-xs text-red-300">{error}</p>}
@@ -189,7 +194,7 @@ function CodePreview({ sample }: { sample: CodeSample }) {
               customStyle={{
                 margin: 0,
                 background: "transparent",
-                fontSize: "0.72rem",   // good on phone
+                fontSize: "0.72rem", // good on phone
                 padding: "0.75rem",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-all",
@@ -228,7 +233,7 @@ function CodePreview({ sample }: { sample: CodeSample }) {
         </div>
       )}
     </motion.div>
-  )
+  );
 }
 /* ------------------------ Projects Data ------------------------ */
 
@@ -544,29 +549,34 @@ const projects: Project[] = [
     year: "2025",
     summary:
       "A full-stack platform where users discover unique Louisiana heritage languages and share custom-made language courses with the public and friends. Built using Django, React, and JWT-based authentication.",
-    tech: ["Python", "Django", "React", "REST API", "Vercel"],
+    tech: [
+      Technologies.PYTHON,
+      Technologies.DJANGO,
+      Technologies.REACT,
+      Technologies.VERCEL,
+    ],
     details: [
       "Built full-stack web application with Django backend and React frontend to showcase cultural language content.",
       "Implemented role-based authentication and secure access using JWT tokens.",
       "Added automated testing workflows using Django Test Framework and React Storybook for component-level testing.",
-      "Designed course-sharing system where users can create, publish, and share lessons publicly or privately."
+      "Designed course-sharing system where users can create, publish, and share lessons publicly or privately.",
     ],
     highlights: [
       "Full-Stack Testing (Django Test + Storybook)",
       "JWT Authentication System",
-      "Course Sharing & Heritage Content Platform"
+      "Course Sharing & Heritage Content Platform",
     ],
     userExperience: [
       "Users browse public heritage-language courses with clean navigation and fast search.",
       "Creators can upload lessons, edit content, and publish courses for friends or the community.",
       "Authentication keeps personal courses private unless explicitly shared.",
-      "Responsive UI delivers consistent experience across desktop and mobile."
+      "Responsive UI delivers consistent experience across desktop and mobile.",
     ],
     image: "",
     screens: [],
     repoUrl: "",
     showCodePreview: true,
-    codeSamples: []
+    codeSamples: [],
   },
 
   {
@@ -575,28 +585,34 @@ const projects: Project[] = [
     year: "2025",
     summary:
       "Led 30+ developers in building a cross-platform campus app for LSU students, featuring events, organizations, and personalized campus discovery. Oversaw architecture, technical roadmap, and engineering workflow.",
-    tech: ["Flutter", "Supabase", "Provider", "GCP", "Node.js"],
+    tech: [
+      Technologies.FLUTTER,
+      Technologies.SUPABASE,
+      // Technologies.PROVIDER, // Assuming Provider is a state management library, not a standalone tech for this list
+      Technologies.GCP,
+      Technologies.NODE_JS,
+    ],
     details: [
       "Designed high-level architecture for a Flutter-based mobile + web ecosystem using Provider for state management.",
       "Led sprint planning, PR review pipelines, and onboarding for 30+ developers ranging from beginner to advanced.",
       "Created client–server communication model using Supabase, middleware caching, and GCP VM routing.",
-      "Established guidelines for modular Flutter development and scalable backend design."
+      "Established guidelines for modular Flutter development and scalable backend design.",
     ],
     highlights: [
       "Leadership of 30+ Developers",
       "Cross-Platform Architecture",
-      "Campus Events, Orgs & Discovery Modules"
+      "Campus Events, Orgs & Discovery Modules",
     ],
     userExperience: [
       "Students browse events, organizations, and recommendations tailored to campus life.",
       "Organizations post announcements and media visible instantly in the feed.",
       "Users enjoy consistent mobile + web experience built with Flutter.",
-      "Middleware optimizes storage and reduces Supabase cost."
+      "Middleware optimizes storage and reduces Supabase cost.",
     ],
     image: "",
     screens: [],
     repoUrl: "",
-    showCodePreview: false
+    showCodePreview: false,
   },
 
   {
@@ -605,22 +621,26 @@ const projects: Project[] = [
     year: "2024",
     summary:
       "A modern club website built using Flutter and Go, serving as the central hub for LSU’s Google Developer Student Club.",
-    tech: ["Flutter", "Go", "Web"],
+    tech: [Technologies.FLUTTER, Technologies.GO],
     details: [
       "Designed and built interactive landing pages using Flutter Web.",
       "Implemented backend utilities in Go to support dynamic updates.",
-      "Created responsive layouts and component-driven UI for rapid iteration."
+      "Created responsive layouts and component-driven UI for rapid iteration.",
     ],
-    highlights: ["Flutter Web", "Go Backend Utilities", "Club Branding Experience"],
+    highlights: [
+      "Flutter Web",
+      "Go Backend Utilities",
+      "Club Branding Experience",
+    ],
     userExperience: [
       "Visitors browse upcoming events, projects, and club resources.",
       "Mobile-first layout ensures smooth experience across all browsers.",
-      "Admins update content through simple backend scripts."
+      "Admins update content through simple backend scripts.",
     ],
     image: "",
     screens: [],
     repoUrl: "",
-    showCodePreview: false
+    showCodePreview: false,
   },
 
   {
@@ -629,28 +649,35 @@ const projects: Project[] = [
     year: "2025",
     summary:
       "An AI tutoring platform supporting 100+ students across 25+ CS and physics topics. Uses a supervisor-based multi-agent system to deliver structured explanations and personalized help.",
-    tech: ["Python", "LangChain", "React", "AWS", "FastAPI", "Vercel"],
+    tech: [
+      Technologies.PYTHON,
+      Technologies.LANGCHAIN,
+      Technologies.REACT,
+      Technologies.AWS,
+      Technologies.FASTAPI,
+      Technologies.VERCEL,
+    ],
     details: [
       "Built supervised multi-agent LLM system using LangChain with 3 specialized tutor models.",
       "Implemented FastAPI backend hosted on AWS with scalable endpoints.",
       "Built modern React frontend deployed on Vercel for seamless student access.",
-      "Integrated topic routing, memory, and reasoning tools for consistent explanations."
+      "Integrated topic routing, memory, and reasoning tools for consistent explanations.",
     ],
     highlights: [
       "Multi-Agent LLM System",
       "100+ Real Student Users",
-      "AWS Deployment + React Frontend"
+      "AWS Deployment + React Frontend",
     ],
     userExperience: [
       "Students pick a topic and instantly receive structured tutoring responses.",
       "Supervisor agent routes questions to the correct domain tutor (CS, physics, etc.).",
-      "Progress persists across sessions with account-based storage."
+      "Progress persists across sessions with account-based storage.",
     ],
     image: "",
     screens: [],
     repoUrl: "",
     showCodePreview: true,
-    codeSamples: []
+    codeSamples: [],
   },
 
   {
@@ -659,22 +686,27 @@ const projects: Project[] = [
     year: "2024",
     summary:
       "A large-scale scraping and ETL pipeline collecting 8,000+ professor profiles and 14,000+ course records using Selenium and BeautifulSoup.",
-    tech: ["Python", "Selenium", "BeautifulSoup", "ETL"],
+    tech: [
+      Technologies.PYTHON,
+      Technologies.SELENIUM,
+      Technologies.BEAUTIFUL_SOUP,
+      // ETL is a concept, not a specific technology from your list
+    ],
     details: [
       "Developed and maintained 30+ scrapers for professor and course websites.",
       "Optimized ETL workflows to improve data access speed by 45%.",
-      "Served 150+ student users with a searchable professor/course discovery tool."
+      "Served 150+ student users with a searchable professor/course discovery tool.",
     ],
     highlights: ["Large-Scale ETL", "30+ Scrapers", "Research Collaboration"],
     userExperience: [
       "Students search for professors and compare ratings across departments.",
       "Data refreshes automatically with nightly scraping jobs.",
-      "ETL optimizations reduce lookup delays and improve UX."
+      "ETL optimizations reduce lookup delays and improve UX.",
     ],
     image: "",
     screens: [],
     repoUrl: "",
-    showCodePreview: false
+    showCodePreview: false,
   },
 
   {
@@ -683,26 +715,30 @@ const projects: Project[] = [
     year: "2024",
     summary:
       "A Python-based API for automating video editing tasks for a YouTube channel with 2M+ subscribers. Handles trimming, transitions, overlays, and rendering.",
-    tech: ["Python", "MoviePy", "YouTube API"],
+    tech: [
+      Technologies.PYTHON,
+      Technologies.MOVIEPY,
+      // YouTube API is a service, not a specific technology from your list
+    ],
     details: [
       "Built API to trim, merge, and enhance clips automatically.",
       "Added automated transitions, text overlays, and final render pipeline.",
-      "Reduced manual video editing workload by over 70%."
+      "Reduced manual video editing workload by over 70%.",
     ],
     highlights: [
       "MoviePy Automation",
       "YouTube API Integration",
-      "70% Editing Time Reduction"
+      "70% Editing Time Reduction",
     ],
     userExperience: [
       "Creators upload raw clips and receive fully edited videos automatically.",
       "API handles rendering and uploads edited videos directly to YouTube draft.",
-      "Configurable presets allow style consistency across content."
+      "Configurable presets allow style consistency across content.",
     ],
     image: "",
     screens: [],
     repoUrl: "",
-    showCodePreview: false
+    showCodePreview: false,
   },
 
   {
@@ -711,49 +747,58 @@ const projects: Project[] = [
     year: "2023",
     summary:
       "A prototype social media platform built using HTML, CSS, and JavaScript, focused on user profiles, authentication, and responsive UI.",
-    tech: ["HTML", "CSS", "JavaScript"],
+    tech: [Technologies.HTML, Technologies.CSS, Technologies.JAVASCRIPT],
     details: [
       "Developed early-stage blueprint for a confidential social platform.",
       "Implemented login authentication and basic profile system.",
-      "Designed responsive front-end layout optimized for mobile."
+      "Designed responsive front-end layout optimized for mobile.",
     ],
     highlights: ["Auth Prototype", "Responsive UI", "Frontend Engineering"],
     userExperience: [
       "Users create accounts, log in, and view profile data.",
       "UI adapts smoothly across devices.",
-      "Demo served as foundation for later iterations."
+      "Demo served as foundation for later iterations.",
     ],
     image: "",
     screens: [],
     repoUrl: "",
-    showCodePreview: false
-  }
+    showCodePreview: false,
+  },
 ];
 
 /* ------------------------ Component ------------------------ */
 
-export default function Projects() {
-  const [activeProject, setActiveProject] = useState<Project | null>(null)
-  const [activeSampleIndex, setActiveSampleIndex] = useState(0)
-  const [activeScreenIndex, setActiveScreenIndex] = useState(0)
+export default function Projects({ selectedTechs }: ProjectsProps) {
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeSampleIndex, setActiveSampleIndex] = useState(0);
+  const [activeScreenIndex, setActiveScreenIndex] = useState(0);
 
   useEffect(() => {
-    setActiveSampleIndex(0)
-    setActiveScreenIndex(0)
-  }, [activeProject?.id])
+    setActiveSampleIndex(0);
+    setActiveScreenIndex(0);
+  }, [activeProject?.id]);
+
+  const filteredProjects =
+    selectedTechs.size === 0
+      ? projects
+      : projects.filter((project) =>
+          project.tech.some((tech) => selectedTechs.has(tech.name)),
+        );
 
   return (
     <section id="projects" className="relative min-h-screen space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="text-2xl font-semibold text-white">Highlighted Projects</h2>
+        <h2 className="text-2xl font-semibold text-white">
+          Highlighted Projects
+        </h2>
         <span className="hidden text-xs uppercase tracking-[0.2em] text-amber-300/80 md:inline">
           Selected work
         </span>
       </div>
 
       {/* Grid of preview cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, idx) => (
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 ">
+        {filteredProjects.map((project, idx) => (
           <motion.div
             key={project.id}
             layout
@@ -765,7 +810,11 @@ export default function Projects() {
             onClick={() => setActiveProject(project)}
             className="cursor-pointer"
           >
-            <Card className="h-full border border-white/10 bg-slate-900/80 backdrop-blur shadow-md shadow-purple-900/40 hover:border-purple-400/50 hover:shadow-purple-500/40 transition-colors">
+            <Card
+              className={cn(
+                "h-full border border-white/10 bg-slate-900/80 backdrop-blur shadow-md shadow-purple-900/40 hover:border-purple-400/50 hover:shadow-purple-500/40 transition-all",
+              )}
+            >
               <CardHeader>
                 <div className="flex items-start justify-between gap-2">
                   <CardTitle className="text-base text-slate-50">
@@ -778,14 +827,14 @@ export default function Projects() {
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <p className="line-clamp-3 text-slate-300">{project.summary}</p>
-                <div className="flex flex-wrap gap-2 text-[11px]">
-                  {project.tech.map((t) => (
+                <div className="flex flex-wrap gap-2 text-[11px] min-h-[44px]">
+                  {project.tech.map((tech) => (
                     <Badge
-                      key={t}
+                      key={tech.name}
                       variant="secondary"
                       className="bg-purple-500/20 text-purple-100 border border-purple-400/40"
                     >
-                      {t}
+                      {tech.name}
                     </Badge>
                   ))}
                 </div>
@@ -838,13 +887,13 @@ export default function Projects() {
 
                 <div className="flex items-center gap-2">
                   <div className="hidden flex-wrap gap-2 text-[11px] md:flex">
-                    {activeProject.tech.map((t) => (
+                    {activeProject.tech.map((tech) => (
                       <Badge
-                        key={t}
+                        key={tech.name}
                         variant="secondary"
                         className="bg-purple-500/30 text-purple-50 border border-purple-400/60"
                       >
-                        {t}
+                        {tech.name}
                       </Badge>
                     ))}
                   </div>
@@ -880,7 +929,8 @@ export default function Projects() {
               >
                 {/* LEFT: images + description */}
                 <section className="space-y-4 rounded-xl border border-white/10 bg-slate-900/80 p-4 shadow-xl shadow-purple-900/40 md:p-6">
-                  {(activeProject.screens && activeProject.screens.length > 0) ||
+                  {(activeProject.screens &&
+                    activeProject.screens.length > 0) ||
                   activeProject.image ? (
                     <div className="space-y-3">
                       <div className="flex justify-center">
@@ -904,7 +954,7 @@ export default function Projects() {
                         activeProject.screens.length > 1 && (
                           <div className="flex justify-center gap-2 overflow-x-auto pt-1">
                             {activeProject.screens.map((src, idx) => {
-                              const isActive = idx === activeScreenIndex
+                              const isActive = idx === activeScreenIndex;
                               return (
                                 <button
                                   key={src}
@@ -927,7 +977,7 @@ export default function Projects() {
                                     className="block h-auto w-auto max-h-16 object-contain"
                                   />
                                 </button>
-                              )
+                              );
                             })}
                           </div>
                         )}
@@ -968,13 +1018,13 @@ export default function Projects() {
                     )}
 
                     <div className="mt-2 flex flex-wrap gap-2 text-[11px] md:hidden">
-                      {activeProject.tech.map((t) => (
+                      {activeProject.tech.map((tech) => (
                         <Badge
-                          key={t}
+                          key={tech.name}
                           variant="outline"
                           className="border-purple-400/60 text-purple-100"
                         >
-                          {t}
+                          {tech.name}
                         </Badge>
                       ))}
                     </div>
@@ -993,7 +1043,7 @@ export default function Projects() {
 
                         <div className="inline-flex flex-wrap gap-2 rounded-lg bg-slate-800/80 p-1">
                           {activeProject.codeSamples.map((sample, idx) => {
-                            const isActive = idx === activeSampleIndex
+                            const isActive = idx === activeSampleIndex;
                             return (
                               <button
                                 key={sample.label}
@@ -1008,7 +1058,7 @@ export default function Projects() {
                               >
                                 {sample.label}
                               </button>
-                            )
+                            );
                           })}
                         </div>
                       </div>
@@ -1025,11 +1075,10 @@ export default function Projects() {
                     </section>
                   )}
               </main>
-
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </section>
-  )
+  );
 }
