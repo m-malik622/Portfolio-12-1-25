@@ -143,16 +143,36 @@
   stroke-dasharray: 0 400;
   stroke-dashoffset: 0;
   animation: scribbleDraw 14s ease-in-out infinite alternate;
+  will-change: stroke-dashoffset;
 }
 
 .scribble-stroke-delayed {
   stroke-dasharray: 0 400;
   stroke-dashoffset: 0;
   animation: scribbleDraw 18s ease-in-out infinite alternate;
+  will-change: stroke-dashoffset;
 }
 
-  
-  
+/* Disable expensive animations on mobile for performance */
+@media (max-width: 640px) {
+  .animate-pulseGlow {
+    animation: none !important;
+  }
+  .scribble-stroke,
+  .scribble-stroke-delayed {
+    animation: none !important;
+  }
+  /* Reduce motion for sensitive users */
+  @supports (animation-duration: 0.01ms) {
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  }
+}
 
   .animate-float {
     animation: float 8s ease-in-out infinite;
