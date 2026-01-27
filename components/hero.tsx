@@ -63,24 +63,30 @@ export default function Hero() {
 
   // Autoslide
   useEffect(() => {
-    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL) as unknown as NodeJS.Timeout;
+    intervalRef.current = setInterval(
+      () => paginate(1),
+      SLIDE_INTERVAL,
+    ) as unknown as NodeJS.Timeout;
     return () => clearInterval(intervalRef.current as NodeJS.Timeout);
   }, []);
 
   const resetTimer = () => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
-    intervalRef.current = setInterval(() => paginate(1), SLIDE_INTERVAL) as unknown as NodeJS.Timeout;
+    intervalRef.current = setInterval(
+      () => paginate(1),
+      SLIDE_INTERVAL,
+    ) as unknown as NodeJS.Timeout;
   };
 
   return (
-    <section className="relative flex h-screen items-center justify-center px-4">
-      <div className="relative h-[90vh] w-full max-w-6xl overflow-hidden rounded-3xl shadow-xl">
-        {/* Glow behind carousel */}
+    <section className="relative flex h-[60vh] items-center justify-center px-4">
+      <div className="relative h-[60vh] w-full max-w-6xl overflow-hidden rounded-3xl shadow-xl">
+        {/* Glow behind carousel - disabled on mobile for performance */}
         <div
           className="absolute inset-0 z-0 rounded-3xl
              bg-gradient-to-tr from-purple-500/50 via-indigo-400/40 to-amber-400/40
              filter blur-3xl
-             animate-pulseGlow"
+             hidden sm:block animate-pulseGlow"
         />
 
         <AnimatePresence initial={false} custom={direction}>
@@ -92,16 +98,22 @@ export default function Hero() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.7, ease: "easeInOut" }}
+            transition={{ duration: 0.45, ease: "easeInOut" }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.15}
+            dragElastic={0.2}
+            dragMomentum={false}
+            style={{ willChange: "transform" }}
             onDragEnd={(_, info) => {
-              if (info.offset.x < -120) {
+              const swipeThreshold = 50;
+              const velocity = info.velocity.x;
+
+              // Detect swipe with both distance and velocity
+              if (info.offset.x < -swipeThreshold || velocity < -500) {
                 paginate(1);
                 resetTimer();
               }
-              if (info.offset.x > 120) {
+              if (info.offset.x > swipeThreshold || velocity > 500) {
                 paginate(-1);
                 resetTimer();
               }
@@ -133,13 +145,14 @@ export default function Hero() {
         </button>
 
         {/* Mobile navigation (arrows + dots) */}
-        <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-4 sm:hidden">
+        <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full bg-black/40 backdrop-blur-sm px-4 py-2.5 sm:hidden">
           <button
             onClick={() => {
               paginate(-1);
               resetTimer();
             }}
-            className="p-1 text-white/70 hover:text-white transition"
+            className="p-1 text-white/70 hover:text-white active:scale-95 transition"
+            aria-label="Previous slide"
           >
             <ChevronLeft size={22} />
           </button>
@@ -151,9 +164,11 @@ export default function Hero() {
                 setState([i, i > index ? 1 : -1]);
                 resetTimer();
               }}
-              className={`h-2.5 w-2.5 rounded-full transition ${
-                i === index ? "bg-white" : "bg-white/40"
+              className={`h-2 w-2 rounded-full transition-all ${
+                i === index ? "bg-white w-3" : "bg-white/40 hover:bg-white/60"
               }`}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === index}
             />
           ))}
 
@@ -162,7 +177,8 @@ export default function Hero() {
               paginate(1);
               resetTimer();
             }}
-            className="p-1 text-white/70 hover:text-white transition"
+            className="p-1 text-white/70 hover:text-white active:scale-95 transition"
+            aria-label="Next slide"
           >
             <ChevronRight size={22} />
           </button>
@@ -175,7 +191,13 @@ export default function Hero() {
 /* ------------------------------- */
 /* Slide Content */
 /* ------------------------------- */
-function SlideContent({ slide, router }: { slide: (typeof slides)[number]; router: ReturnType<typeof useRouter> }) {
+function SlideContent({
+  slide,
+  router,
+}: {
+  slide: (typeof slides)[number];
+  router: ReturnType<typeof useRouter>;
+}) {
   const handleClick = () => {
     if (!slide.link) return; // do nothing if link is empty
     if (slide.link.startsWith("http")) {
@@ -213,7 +235,7 @@ function SlideContent({ slide, router }: { slide: (typeof slides)[number]; route
         <div className="flex-grow" />
 
         {/* CTA */}
-        <div className="flex justify-center pb-4 sm:justify-start">
+        <div className="flex justify-center pb-24 sm:justify-start sm:pb-4">
           <Button
             size="lg"
             variant={"secondary"}
