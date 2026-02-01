@@ -43,6 +43,7 @@ export const Technologies = {
   PYTORCH: { name: "PyTorch", category: "AI/ML" },
   LANGCHAIN: { name: "LangChain", category: "AI/ML" },
   FASTMCP: { name: "FastMCP", category: "AI/ML" },
+  DATABRICKS: { name: "DataBricks", category: "AI/ML" },
 
   // Web Scraping 
   BEAUTIFUL_SOUP: { name: "BeautifulSoup", category: "Web Scraping" },

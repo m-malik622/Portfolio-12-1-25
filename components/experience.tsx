@@ -19,9 +19,12 @@ const EXPERIENCE_ITEMS = [
       "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
     technologies: [
       Technologies.PYTHON,
-      Technologies.REACT,
-      Technologies.AWS,
-      Technologies.FASTAPI,
+      Technologies.FASTMCP,
+      Technologies.LANGCHAIN,
+      Technologies.POSTGRESQL,
+      Technologies.DOCKER,
+      Technologies.GITHUB_ACTIONS,
+      Technologies.UNIT_TESTING,
     ],
   },
   {
@@ -33,7 +36,15 @@ const EXPERIENCE_ITEMS = [
     ],
     className:
       "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
-    technologies: [Technologies.PYTHON, Technologies.GCP],
+    technologies: [
+      Technologies.PYTHON,
+      Technologies.CPP,
+      Technologies.DATABRICKS,
+      Technologies.PYTORCH,
+      Technologies.DOCKER,
+      Technologies.DYNAMODB,
+      Technologies.UNIT_TESTING,
+    ],
   },
   {
     title: "President — Google Developer Group @ LSU",
@@ -47,7 +58,14 @@ const EXPERIENCE_ITEMS = [
     technologies: [
       Technologies.FLUTTER,
       Technologies.GO,
-      Technologies.SUPABASE,
+      Technologies.FIREBASE,
+      Technologies.GCP,
+      Technologies.SELENIUM,
+      Technologies.PYTORCH,
+      Technologies.FASTMCP,
+      Technologies.HTML,
+      Technologies.CSS,
+      Technologies.JAVASCRIPT,
     ],
   },
   {
@@ -59,7 +77,11 @@ const EXPERIENCE_ITEMS = [
     ],
     className:
       "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
-    technologies: [Technologies.JAVA],
+    technologies: [
+      Technologies.JAVA,
+      Technologies.PROPERTY_TESTING,
+      Technologies.SELENIUM,
+    ],
   },
   {
     title: "Software Engineering Researcher — Professor Index App",
@@ -69,7 +91,13 @@ const EXPERIENCE_ITEMS = [
     ],
     className:
       "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
-    technologies: [Technologies.PYTHON],
+    technologies: [
+      Technologies.PYTHON,
+      Technologies.SUPABASE,
+      Technologies.BEAUTIFUL_SOUP,
+      Technologies.SELENIUM,
+      Technologies.UNIT_TESTING,
+    ],
   },
 ];
 
@@ -100,7 +128,7 @@ export default function Experience({ selectedTechs }: ExperienceProps) {
               </CardTitle>
               {/* Desktop: Tech badges on the right */}
               {item.technologies && (
-                <div className="hidden shrink-0 md:flex flex-wrap gap-2 justify-end">
+                <div className="hidden  md:flex flex-wrap gap-2 justify-end">
                   {item.technologies.map((tech) => (
                     <Badge
                       key={tech.name}
