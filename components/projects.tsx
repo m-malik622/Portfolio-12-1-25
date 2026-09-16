@@ -211,7 +211,7 @@ function CodePreview({ sample }: { sample: CodeSample }) {
 
             {/* fade only when collapsed */}
             {hasMore && !expanded && (
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/95 to-black/0" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-black/95 to-black/0" />
             )}
           </>
         )}
@@ -241,7 +241,7 @@ const projects: Project[] = [
     title: "Project Heritera",
     year: "2025",
     summary:
-      "A full-stack platform where users discover unique Louisiana heritage languages and share custom-made language courses with the public and friends. Built using Django, React, and JWT-based authentication.",
+      "A full-stack platform where users discover unique Louisiana heritage languages and share custom-made courses with the public or friends. Built using Django, React, and JWT-based authentication.",
     tech: [
       Technologies.PYTHON,
       Technologies.DJANGO,
@@ -255,6 +255,7 @@ const projects: Project[] = [
       Technologies.DOCKER,
       Technologies.GCP,
       Technologies.POSTGRESQL,
+      Technologies.STORYBOOK,
       Technologies.GITHUB_ACTIONS,
       Technologies.UNIT_TESTING,
     ],
@@ -273,7 +274,6 @@ const projects: Project[] = [
       "Users browse public heritage-language courses with clean navigation and fast search.",
       "Creators can upload lessons, edit content, and publish courses for friends or the community.",
       "Authentication keeps personal courses private unless explicitly shared.",
-      "Responsive UI delivers consistent experience across desktop and mobile.",
     ],
     image: "",
     screens: [],
@@ -325,7 +325,17 @@ const projects: Project[] = [
     year: "2024",
     summary:
       "A modern club website, serving as the central hub for LSU’s Google Developer Student Club.",
-    tech: [Technologies.JAVASCRIPT, Technologies.TYPESCRIPT, Technologies.REACT, Technologies.HTML, Technologies.NODE_JS, Technologies.CSS, Technologies.VERCEL, Technologies.DOCKER, Technologies.FIREBASE],
+    tech: [
+      Technologies.JAVASCRIPT,
+      Technologies.TYPESCRIPT,
+      Technologies.REACT,
+      Technologies.HTML,
+      Technologies.NODE_JS,
+      Technologies.CSS,
+      Technologies.VERCEL,
+      Technologies.DOCKER,
+      Technologies.FIREBASE,
+    ],
     details: [
       "Designed and built interactive landing pages using Flutter Web.",
       "Implemented backend utilities in Go to support dynamic updates.",
@@ -458,7 +468,12 @@ const projects: Project[] = [
     year: "2023",
     summary:
       "A prototype social media platform built using HTML, CSS, and JavaScript, focused on user profiles, authentication, and responsive UI.",
-    tech: [Technologies.HTML, Technologies.CSS, Technologies.JAVASCRIPT, Technologies.SELENIUM],
+    tech: [
+      Technologies.HTML,
+      Technologies.CSS,
+      Technologies.JAVASCRIPT,
+      Technologies.SELENIUM,
+    ],
     details: [
       "Developed early-stage blueprint for a confidential social platform.",
       "Implemented login authentication and basic profile system.",
@@ -484,11 +499,6 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
   const [activeSampleIndex, setActiveSampleIndex] = useState(0);
   const [activeScreenIndex, setActiveScreenIndex] = useState(0);
 
-  useEffect(() => {
-    setActiveSampleIndex(0);
-    setActiveScreenIndex(0);
-  }, [activeProject?.id]);
-
   const filteredProjects =
     selectedTechs.size === 0
       ? projects
@@ -499,7 +509,7 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
   return (
     <section id="projects" className="relative min-h-screen space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="text-2xl font-semibold text-white">
+        <h2 className="text-2xl font-semibold text-slate-950">
           Highlighted Projects
         </h2>
         <span className="hidden text-xs uppercase tracking-[0.2em] text-amber-300/80 md:inline">
@@ -518,38 +528,42 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
             transition={{ delay: 0.05 * idx, duration: 0.3 }}
             whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setActiveProject(project)}
+            onClick={() => {
+              setActiveProject(project);
+              setActiveSampleIndex(0);
+              setActiveScreenIndex(0);
+            }}
             className="cursor-pointer"
           >
             <Card
               className={cn(
-                "h-full border border-white/10 bg-slate-900/80 backdrop-blur shadow-md shadow-purple-900/40 hover:border-purple-400/50 hover:shadow-purple-500/40 transition-all",
+                "h-full border border-slate-200 bg-white/90 backdrop-blur shadow-sm shadow-slate-900/10 hover:border-purple-300 transition-all",
               )}
             >
               <CardHeader>
                 <div className="flex items-start justify-between gap-2">
-                  <CardTitle className="text-base text-slate-50">
+                  <CardTitle className="text-base text-slate-950">
                     {project.title}
                   </CardTitle>
-                  <span className="text-[11px] font-medium text-amber-300">
+                  <span className="text-[11px] font-medium text-amber-700">
                     {project.year}
                   </span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
-                <p className="line-clamp-3 text-slate-300">{project.summary}</p>
-                <div className="flex flex-wrap gap-2 text-[11px] min-h-[44px]">
+                <p className="line-clamp-3 text-slate-700">{project.summary}</p>
+                <div className="flex min-h-11 flex-wrap gap-2 text-[11px]">
                   {project.tech.map((tech) => (
                     <Badge
                       key={tech.name}
                       variant="secondary"
-                      className="bg-purple-500/20 text-purple-100 border border-purple-400/40"
+                      className="border border-purple-300/80 bg-purple-100/90 text-purple-900"
                     >
                       {tech.name}
                     </Badge>
                   ))}
                 </div>
-                <p className="mt-1 text-[11px] text-amber-300">
+                <p className="mt-1 text-[11px] text-amber-700">
                   Click to open full case study →
                 </p>
               </CardContent>
@@ -563,7 +577,7 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
         {activeProject && (
           <motion.div
             key={activeProject.id}
-            className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl overflow-y-auto"
+            className="fixed inset-0 z-50 overflow-y-auto bg-white/95 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -571,25 +585,25 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
           >
             <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col">
               {/* Top bar */}
-              <header className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-slate-950/90 px-4 py-3 md:px-8">
+              <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white/90 px-4 py-3 md:px-8">
                 <div className="flex items-center gap-3">
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-slate-100 hover:bg-slate-800/80"
+                    className="text-slate-700 hover:bg-slate-100 hover:text-slate-950"
                     onClick={() => setActiveProject(null)}
                   >
                     ← Back
                   </Button>
                   <div className="flex flex-col">
-                    <span className="text-xs uppercase tracking-wide text-slate-400">
+                    <span className="text-xs uppercase tracking-wide text-slate-500">
                       Project
                     </span>
                     <div className="flex items-center gap-2">
-                      <h1 className="text-sm font-semibold text-slate-50 md:text-base">
+                      <h1 className="text-sm font-semibold text-slate-950 md:text-base">
                         {activeProject.title}
                       </h1>
-                      <span className="rounded-full bg-amber-400/15 px-2 py-0.5 text-[11px] font-medium text-amber-300 border border-amber-400/40">
+                      <span className="rounded-full border border-amber-300/70 bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-800">
                         {activeProject.year}
                       </span>
                     </div>
@@ -602,7 +616,7 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
                       <Badge
                         key={tech.name}
                         variant="secondary"
-                        className="bg-purple-500/30 text-purple-50 border border-purple-400/60"
+                        className="border border-purple-300/80 bg-purple-100/90 text-purple-900"
                       >
                         {tech.name}
                       </Badge>
@@ -613,7 +627,7 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
                       asChild
                       variant="outline"
                       size="sm"
-                      className="border-amber-400/60 bg-amber-400/10 text-xs text-amber-100 hover:bg-amber-400/20"
+                      className="border-amber-300 bg-amber-100 text-xs text-amber-900 hover:bg-amber-200"
                     >
                       <a
                         href={activeProject.repoUrl}
@@ -639,13 +653,13 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
                 }
               >
                 {/* LEFT: images + description */}
-                <section className="space-y-4 rounded-xl border border-white/10 bg-slate-900/80 p-4 shadow-xl shadow-purple-900/40 md:p-6">
+                <section className="space-y-4 rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm shadow-slate-900/10 md:p-6">
                   {(activeProject.screens &&
                     activeProject.screens.length > 0) ||
                   activeProject.image ? (
                     <div className="space-y-3">
                       <div className="flex justify-center">
-                        <div className="inline-block overflow-hidden rounded-[1.75rem] border border-slate-700 bg-black shadow-xl shadow-black/60">
+                        <div className="inline-block overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-sm shadow-slate-900/10">
                           <Image
                             src={
                               activeProject.screens &&
@@ -697,10 +711,10 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
 
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <h2 className="text-xl font-bold text-slate-50 md:text-2xl">
+                      <h2 className="text-xl font-bold text-slate-950 md:text-2xl">
                         {activeProject.title}
                       </h2>
-                      <p className="text-sm text-slate-300">
+                      <p className="text-sm text-slate-700">
                         {activeProject.summary}
                       </p>
                     </div>
@@ -733,7 +747,7 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
                         <Badge
                           key={tech.name}
                           variant="outline"
-                          className="border-purple-400/60 text-purple-100"
+                          className="border-purple-300 bg-purple-50 text-purple-900"
                         >
                           {tech.name}
                         </Badge>
@@ -746,13 +760,13 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
                 {activeProject.showCodePreview !== false &&
                   activeProject.codeSamples &&
                   activeProject.codeSamples.length > 0 && (
-                    <section className="flex flex-col gap-3 rounded-xl border border-white/10 bg-slate-900/80 p-4 shadow-xl shadow-purple-900/40 md:p-6">
+                    <section className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm shadow-slate-900/10 md:p-6">
                       <div className="flex flex-col gap-2">
-                        <span className="text-xs font-semibold uppercase tracking-wide text-amber-300">
+                        <span className="text-xs font-semibold uppercase tracking-wide text-amber-700">
                           Code Samples
                         </span>
 
-                        <div className="inline-flex flex-wrap gap-2 rounded-lg bg-slate-800/80 p-1">
+                        <div className="inline-flex flex-wrap gap-2 rounded-lg bg-slate-100 p-1">
                           {activeProject.codeSamples.map((sample, idx) => {
                             const isActive = idx === activeSampleIndex;
                             return (
@@ -763,8 +777,8 @@ export default function Projects({ selectedTechs }: ProjectsProps) {
                                 className={[
                                   "min-w-20 rounded-md px-3 py-1 text-[11px] font-mono transition",
                                   isActive
-                                    ? "bg-slate-950 text-amber-200 border border-amber-400/70 shadow-sm shadow-amber-400/40"
-                                    : "bg-slate-800 text-slate-200 border border-transparent hover:bg-slate-900 hover:text-amber-100",
+                                    ? "border border-amber-300 bg-white text-amber-800 shadow-sm shadow-slate-900/10"
+                                    : "border border-transparent bg-transparent text-slate-700 hover:bg-white hover:text-amber-800",
                                 ].join(" ")}
                               >
                                 {sample.label}

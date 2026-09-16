@@ -9,6 +9,27 @@ interface ExperienceProps {
 
 const EXPERIENCE_ITEMS = [
   {
+    title:
+      "Athletics Dashboard Applications Developer — LSU Athletics & Digital Media Center",
+    bullets: [
+      "Engineered the CHAMPS dashboard using React and Python to centralize performance analytics for 300+ athletes and deliver personalized AI agents for injury-prevention insights.",
+      "Developed a 3D canvas-based motion-capture application with 30+ analysis functions for kinematic analysis, data plotting, value flagging, and automated biomechanical criteria.",
+    ],
+    className:
+      "border border-amber-300/60 bg-amber-50/90 backdrop-blur-md shadow-sm shadow-slate-900/10",
+    technologies: [
+      Technologies.REACT,
+      Technologies.PYTHON,
+      Technologies.DJANGO,
+      Technologies.FASTAPI,
+      Technologies.TYPESCRIPT,
+      Technologies.NODE_JS,
+      Technologies.DOCKER,
+      Technologies.POSTGRESQL,
+      Technologies.NGINX,
+    ],
+  },
+  {
     title: "AI/LLM Developer Intern - Our Lady of the Lake",
     bullets: [
       "Reduced staff search time by 70% by integrating hospital tools and resources into a unified MCP-driven platform.",
@@ -16,7 +37,7 @@ const EXPERIENCE_ITEMS = [
       "Used Microsoft Foundry AI, Azure containers, and Redis caching to provide centralized high-performance knowledge access.",
     ],
     className:
-      "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+      "border border-slate-200 bg-white/90 backdrop-blur-md shadow-sm shadow-slate-900/10",
     technologies: [
       Technologies.PYTHON,
       Technologies.FASTMCP,
@@ -35,7 +56,7 @@ const EXPERIENCE_ITEMS = [
       "Fine-tuned Azure ML models and built a Power Automate workflow to flag 1,000+ invoice–contract discrepancies, reducing manual verification time.",
     ],
     className:
-      "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+      "border border-slate-200 bg-white/90 backdrop-blur-md shadow-sm shadow-slate-900/10",
     technologies: [
       Technologies.PYTHON,
       Technologies.CPP,
@@ -54,7 +75,7 @@ const EXPERIENCE_ITEMS = [
       "Organized Geaux Hackathon and GDSC events, managing 11 officers and collaborating with GDG chapter leads and industry partners. https://www.linkedin.com/company/gdsclsu",
     ],
     className:
-      "border border-purple-400/40 bg-purple-900/25 backdrop-blur-md shadow-lg shadow-purple-900/40",
+      "border border-purple-300/60 bg-purple-50/90 backdrop-blur-md shadow-sm shadow-slate-900/10",
     technologies: [
       Technologies.FLUTTER,
       Technologies.GO,
@@ -76,7 +97,7 @@ const EXPERIENCE_ITEMS = [
       "Reduced fail rate by 36% through debugging sessions, algorithm walkthroughs, and code optimization practice.",
     ],
     className:
-      "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+      "border border-slate-200 bg-white/90 backdrop-blur-md shadow-sm shadow-slate-900/10",
     technologies: [
       Technologies.JAVA,
       Technologies.PROPERTY_TESTING,
@@ -90,7 +111,7 @@ const EXPERIENCE_ITEMS = [
       "Optimized Python ETL pipeline, improving data access speed by 45% for 150+ student users.",
     ],
     className:
-      "border border-white/15 bg-slate-900/30 backdrop-blur-md shadow-lg shadow-black/30",
+      "border border-slate-200 bg-white/90 backdrop-blur-md shadow-sm shadow-slate-900/10",
     technologies: [
       Technologies.PYTHON,
       Technologies.SUPABASE,
@@ -115,7 +136,10 @@ export default function Experience({ selectedTechs }: ExperienceProps) {
       className="space-y-4 transition-opacity duration-300"
       aria-labelledby="experience-heading"
     >
-      <h2 id="experience-heading" className="text-2xl font-semibold text-white">
+      <h2
+        id="experience-heading"
+        className="text-2xl font-semibold text-slate-950"
+      >
         Experience
       </h2>
 
@@ -123,7 +147,7 @@ export default function Experience({ selectedTechs }: ExperienceProps) {
         {filteredItems.map((item, index) => (
           <Card key={index} className={cn(item.className, "transition-all")}>
             <CardHeader className="flex flex-row items-start justify-between gap-4">
-              <CardTitle className="text-base text-slate-50">
+              <CardTitle className="text-base text-slate-950">
                 {item.title}
               </CardTitle>
               {/* Desktop: Tech badges on the right */}
@@ -133,7 +157,7 @@ export default function Experience({ selectedTechs }: ExperienceProps) {
                     <Badge
                       key={tech.name}
                       variant="secondary"
-                      className="bg-purple-500/20 text-purple-100 border border-purple-400/40"
+                      className="border border-purple-300/80 bg-purple-100/90 text-purple-900"
                     >
                       {tech.name}
                     </Badge>
@@ -142,7 +166,7 @@ export default function Experience({ selectedTechs }: ExperienceProps) {
               )}
             </CardHeader>
 
-            <CardContent className="space-y-2 text-sm text-slate-200">
+            <CardContent className="space-y-2 text-sm text-slate-700">
               <ul className="list-disc space-y-1 pl-5">
                 {item.bullets.map((text, i) => (
                   <li key={i}>{text}</li>
@@ -155,7 +179,7 @@ export default function Experience({ selectedTechs }: ExperienceProps) {
                     <Badge
                       key={tech.name}
                       variant="secondary"
-                      className="bg-purple-500/20 text-purple-100 border border-purple-400/40"
+                      className="border border-purple-300/80 bg-purple-100/90 text-purple-900"
                     >
                       {tech.name}
                     </Badge>
