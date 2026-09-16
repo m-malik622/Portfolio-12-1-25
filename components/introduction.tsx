@@ -22,10 +22,11 @@ function IconButton({
       size="icon"
       className="
         h-10 w-10 rounded-full 
-        bg-white/10 
-        hover:bg-white/20 
-        text-white 
-        shadow-md shadow-white/10
+        border border-border
+        bg-background/80 
+        hover:bg-accent 
+        text-foreground 
+        shadow-sm shadow-slate-900/10
         transition
       "
     >
@@ -34,7 +35,7 @@ function IconButton({
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noreferrer" : undefined}
       >
-        <span className="text-white">{children}</span>
+        <span className="text-current">{children}</span>
       </a>
     </Button>
   );
@@ -55,23 +56,23 @@ export default function Introduction() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.15, duration: 0.5 }}
       >
-        <Badge className="border border-purple-400/50 bg-purple-500/20 text-xs uppercase tracking-wide text-purple-100 backdrop-blur">
-            Software and AI Engineer · Web Dev
+        <Badge className="border border-purple-300/80 bg-purple-100/90 text-xs uppercase tracking-wide text-purple-900 backdrop-blur">
+          Software and AI Engineer · Web Dev
         </Badge>
 
-        <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
+        <h1 className="text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
           Hi, I&apos;m{" "}
           <span className="bg-linear-to-r from-purple-300 via-amber-200 to-purple-200 bg-clip-text text-transparent">
             Mujtaba Malik
           </span>
         </h1>
 
-        <p className="max-w-xl text-gray-300/95 drop-shadow">
-          I’m a junior from New Orleans majoring in
-          Software Engineering with a minor in Math. My interests include
-          machine learning and full-stack web development. I’ve worked as a data
-          science intern at BASF, served as a supplemental instructor, and I’m
-          currently the president of the Google Developer Student Club at LSU
+        <p className="max-w-xl text-slate-700 drop-shadow-none">
+          I’m a junior from New Orleans majoring in Software Engineering with a
+          minor in Math. My interests include machine learning and full-stack
+          web development. I’ve worked as a data science intern at BASF, served
+          as a supplemental instructor, and I’m currently the president of the
+          Google Developer Student Club at LSU
         </p>
 
         <motion.div

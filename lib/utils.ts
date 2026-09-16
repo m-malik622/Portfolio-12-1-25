@@ -31,6 +31,7 @@ export const Technologies = {
   AWS: { name: "AWS", category: "Cloud & DevOps" },
   DYNAMODB: { name: "DynamoDB", category: "Cloud & DevOps" },
   LAMBDA: { name: "Lambda", category: "Cloud & DevOps" },
+  NGINX: { name: "NGINX", category: "Cloud & DevOps" },
   VERCEL: { name: "Vercel", category: "Cloud & DevOps" },
   DOCKER: { name: "Docker", category: "Cloud & DevOps" },
   GCP: { name: "Google Cloud Platform", category: "Cloud & DevOps" },
@@ -51,6 +52,7 @@ export const Technologies = {
 
   //Testing and Automation
   SELENIUM: { name: "Selenium", category: "Testing & Automation" },
+  STORYBOOK: { name: "Storybook", category: "Testing & Automation" },
   GITHUB_ACTIONS: {
     name: "GitHub Actions",
     category: "Testing & Automation",

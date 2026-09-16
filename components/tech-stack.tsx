@@ -34,7 +34,7 @@ export default function TechStack({
       <div className="flex items-center justify-between">
         <h2
           id="tech-stack-heading"
-          className="text-2xl font-semibold text-white"
+          className="text-2xl font-semibold text-slate-950"
         >
           Filter Experiences and Projects
         </h2>
@@ -43,7 +43,7 @@ export default function TechStack({
             variant="destructive"
             size="sm"
             onClick={onClear}
-            className="bg-red-800/80 hover:bg-red-800/60 text-white"
+            className="border border-red-300 bg-red-100 text-red-900 hover:bg-red-200"
           >
             Clear Filters
           </Button>
@@ -52,7 +52,7 @@ export default function TechStack({
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4">
         {Object.entries(groupedByCategory).map(([category, techs]) => (
           <div key={category} className="space-y-2">
-            <h3 className="text-sm font-medium text-slate-300">{category}</h3>
+            <h3 className="text-sm font-medium text-slate-700">{category}</h3>
             <div className="flex flex-wrap gap-2">
               {techs.map((tech) => (
                 <Badge
@@ -60,9 +60,9 @@ export default function TechStack({
                   variant="secondary"
                   onClick={() => onTechToggle(tech.name)}
                   className={cn(
-                    "transition-all hover:bg-slate-700",
+                    "transition-all hover:bg-slate-100",
                     selectedTechs.has(tech.name) &&
-                      "bg-purple-500/40 text-purple-100 border border-purple-400/60 shadow-md shadow-purple-900/50 hover:bg-purple-500/30",
+                      "border border-purple-300 bg-purple-100 text-purple-900 shadow-sm shadow-slate-900/10 hover:bg-purple-200",
                   )}
                 >
                   {tech.name}
